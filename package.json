@@ -1,0 +1,28 @@
+{
+  "name": "selenium_tests",
+  "version": "1.0.0",
+  "description": "Selenium Tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mihomax/selenium_tests.git"
+  },
+  "keywords": [
+    "Selenium",
+    "Tests"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mihomax/selenium_tests/issues"
+  },
+  "homepage": "https://github.com/Mihomax/selenium_tests#readme",
+  "dependencies": {
+    "selenium-chrome-proxy-plugin": "^0.2.2",
+    "webdriver": "^0.0.4",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  }
+}
