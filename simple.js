@@ -25,8 +25,16 @@ driver.sleep(15000).then(function() {
 
     driver.sleep(17000).then(function() {
 
-    var table = driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[1]/td[4]')).getText();
+        var table = new Array();
 
+        for (var i =1; i<11 ; i++ ) {
+
+                for (var k =2; k<5 ; k++ ) {
+var name =  driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[' + i +']/td[' + k + ']')).getText();
+
+table.push(name);
+                }
+        }
 
     driver.sleep(10000).then(function() {
 
@@ -35,17 +43,32 @@ driver.sleep(15000).then(function() {
 
     }); 
 }); 
+
+
+
+
+
+
+
+
+/*
+driver.sleep(17000).then(function() {
+
+    var table = "";
+
+var table = driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[1]/td[4]')).getText();
+
+
+driver.sleep(10000).then(function() {
+
+
+    console.log(table);
+
+}); 
+}); 
+  */  
+
     
-
-     /*
-    //Print data from each cell
-    for (var i=0; i < elements.length; i++){
-    elements[i].getText().then(function(txt){
-    console.log(txt + "\n");
-    });
-    }
-*/
-
 
 
 
