@@ -14,31 +14,32 @@ driver.sleep(10000).then(function () {
 
 
 driver.sleep(15000).then(function () {
-    driver.findElement(By.xpath('//*[@id="Planogram"]/div/button')).click();
+    driver.findElement(By.xpath('//*[@id="Content"]/div/button')).click();
 });
 driver.sleep(15000).then(function () {
-    driver.findElement(By.id('STORE PLANOGRAM')).click();
+    driver.findElement(By.id('CONTENT CATALOGS')).click();
     console.log("Success !!!")
 });
 
 
 
-driver.sleep(18000).then(function () {
+driver.sleep(17000).then(function () {
 
     var table = [];
 
-    for (var i = 5; i < 30; i=i+2) {
+    for (var i = 1; i < 11; i++) {
 
-        for (var k = 2; k < 5; k++) {
-            driver.findElement(By.xpath('//*[@id="storePlanogram"]/table[3]/tbody/tr[' + i + ']/td[' + k + ']')).getText().then(function(name){
-              table.push(name);
-            });
-        }
+            driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[' + i + ']')).getText().then(function(name){
+            
+                var rowValue = name.split(' ');
+            var rowObject = {id: rowValue[0], name: rowValue[1], code: rowValue[2]};
+            table.push(rowObject);
+        });
     }
 
-    driver.sleep(12000).then(function () {
+    driver.sleep(10000).then(function () {
+       console.log(table);
 
-        console.log(table);
     });
 });
 
