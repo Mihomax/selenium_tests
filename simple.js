@@ -31,6 +31,7 @@ driver.sleep(17000).then(function () {
 
         for (var k = 2; k < 5; k++) {
             driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[' + i + ']/td[' + k + ']')).getText().then(function(name){
+                console.log( `row ${i} column ${k} ${name}`);
                 table.push(name);
             });
            
