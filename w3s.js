@@ -18,7 +18,7 @@ driver.sleep(15000).then(function () {
             });
         }
     }*/
-    var tempArray[];
+    
     for (var i = 2; i < 3; i++) {
         var tempArray = [];
         for (var k = 1; k < 4; k++) {

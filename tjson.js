@@ -2,52 +2,102 @@ var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until;
 
-var driver = new webdriver.Builder().forBrowser('chrome').build();
+const co = require('co');
 
-driver.get('https://qashopscreen.microsignage.com/mgmt/index.html#!/login');
-driver.findElement(By.id('email_input')).sendKeys('qatelefonica@microsigns.com');
-driver.findElement(By.id('userPassword')).sendKeys('12345');
+startSeleniumDriver = function() {
+    return co(function*(){
+        try {
+            var driver = new webdriver.Builder().forBrowser('chrome').build();
+            yield driver.get('https://qashopscreen.microsignage.com/mgmt/index.html#!/login');
+            yield driver.findElement(By.id('email_input')).sendKeys('qatelefonica@microsigns.com');
+            yield driver.findElement(By.id('userPassword')).sendKeys('12345');
+            yield driver.findElement(By.id('loginButton')).click();
+            yield driver.sleep(10000);
+            yield driver.findElement(By.xpath('//*[@id="Planogram"]/div/button')).click();
+            yield driver.findElement(By.id('INVENTORY')).click();
+            console.log("Success !!!");
+            
+            yield driver.sleep(5000);
 
-driver.sleep(10000).then(function () {
-    driver.findElement(By.id('loginButton')).click();
-});
+                var table = [];
 
+                let rows = yield driver.findElements(By.tagName("tr"));
+                let cols = yield rows[2].findElements(By.tagName("td"));
+                let head = yield driver.findElements(By.tagName("th"));
 
-driver.sleep(15000).then(function () {
-    driver.findElement(By.xpath('//*[@id="Planogram"]/div/button')).click();
-});
-driver.sleep(15000).then(function () {
-    driver.findElement(By.id('STORE PLANOGRAM')).click();
-    console.log("Success !!!")
-});
+                console.log (rows.length,cols.length,head.length);
 
+                var header = [];
 
+                for (var z= 2; z< head.length; z++) {
 
-driver.sleep(18000).then(function () {
+                let titles = yield driver.findElement(By.xpath('//*[@id="inventory"]/table/thead/tr/th['+z+']')).getText();
+                    header.push(titles);
+            }
+                console.log(header);
+                
+                /*for (var i = 1; i < rows.length-1; i++) {
 
-    var table = [];
+                    var tempArray = [];
 
-    for (var i = 5; i < 30; i=i+2) {
+                        for (var k = 2; k < cols.length; k++) {
+                        let text = yield driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[' + i + ']/td[' + k + ']')).getText();
+                            
+                            tempArray.push(text);
+                        }
+                        table.push({"id":tempArray[0], "name":tempArray[1], "code":tempArray[2]});
+                    }
+             
+                yield driver.sleep(5000);
+                        console.log(table);
+            
+                /*for (var i = 1; i < 11; i++) {
 
-        for (var k = 2; k < 5; k++) {
-            driver.findElement(By.xpath('//*[@id="storePlanogram"]/table[3]/tbody/tr[' + i + ']/td[' + k + ']')).getText().then(function(name){
-              table.push(name);
-            });
+                    var tempArray = [];
+
+                        for (var k = 2; k < 5; k++) {
+                        let text = yield driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[' + i + ']/td[' + k + ']')).getText();
+                            
+                            //table.push(name);
+                            tempArray.push(text);
+                        }
+                        table.push({"id":tempArray[0], "name":tempArray[1], "code":tempArray[2]});
+                    }
+             
+                yield driver.sleep(5000);
+                        console.log(table);
+                       
+
+                yield driver.sleep(5000);
+                yield driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/dir-pagination-controls/ul/li[4]/a')).click();
+                        
+                var page2table = [];
+            
+                        for (var i = 1; i < 9; i++) {
+        
+                            var tempArray = [];
+        
+                                for (var k = 2; k < 5; k++) {
+
+                                let text = yield driver.findElement(By.xpath('/html/body/div/div/div[2]/div[2]/content-catalogs/div/div[4]/table/tbody/tr[' + i + ']/td[' + k + ']')).getText();
+                                    //console.log( `row ${i} column ${k} ${name}`);
+                                    //table.push(name);
+                                    tempArray.push(text);
+                                
+                                }
+                                page2table.push({"id":tempArray[0], "name":tempArray[1], "code":tempArray[2]});
+                            }
+    
+                yield driver.sleep(5000);
+                console.log("And the content of 2nd table is ");
+                console.log(page2table);
+                        
+*/
+            yield driver.quit();
+        } catch (err) {
+            throw err;
         }
-    }
-
-    driver.sleep(12000).then(function () {
-
-        console.log(table);
     });
-});
+};
 
-
-
-
-
-
-
-
-
-
+startSeleniumDriver();
